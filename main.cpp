@@ -9,6 +9,8 @@
 
 using namespace std;
 
+void bfs(const Graph& g, const Vertex& start);
+
 int main() {
     /*DataSet titles = DataSet("small_sample.tsv");
     titles.print();
@@ -33,17 +35,24 @@ int main() {
         }
         g.insertEdge(results[0], results[1]); // Insert edge from that line
     }
+    bfs(g, start);
+}
 
+void bfs(const Graph& g, const Vertex& start) {
     std::unordered_set<std::string> traversed;
     std::queue<std::string> queue;
     queue.push(start);
     while (!queue.empty()) {
         std::string current = queue.front();
         std::cout << current << std::endl;
+        traversed.insert(current);
         queue.pop();
 
-        for (std::string )
+        for (std::string neighbor : g.getAdjacent(current)) {
+            if (traversed.find(neighbor) == traversed.end()) {
+                queue.push(neighbor);
+                traversed.insert(neighbor);
+            }
+        }
     }
-
-
 }
