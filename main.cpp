@@ -48,8 +48,8 @@ void bfs(const Graph& g, const Vertex& start) {
         traversed.insert(current);
         queue.pop();
 
-        for (std::string neighbor : g.getAdjacent(current)) {
-            if (traversed.find(neighbor) == traversed.end()) {
+        for (Vertex neighbor : g.getAdjacent(current)) {
+            if (g.edgeExists(current, neighbor) && traversed.find(neighbor) == traversed.end()) {
                 queue.push(neighbor);
                 traversed.insert(neighbor);
             }
