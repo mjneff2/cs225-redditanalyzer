@@ -6,13 +6,7 @@
 using namespace std;
 
 int main() {
-    
-
-    ifstream body;
-    body.open("soc-redditHyperlinks-body.tsv");
-    body.close();
-
-    DataSet titles = DataSet("soc-redditHyperlinks-title.tsv");
+    DataSet titles = DataSet("small_sample.tsv");
     titles.print();
     return 0;
 }

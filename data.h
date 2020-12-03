@@ -2,6 +2,7 @@
 #pragma once
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -11,5 +12,5 @@ public:
     void print();
     
 private:
-    char data[100];
+    vector<string> lines;
 };
