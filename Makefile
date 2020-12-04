@@ -1,5 +1,5 @@
 
-main : main.o data.o
+main : main.o data.o graph.o
 	clang++ main.o data.o graph.o -o main
 
 main.o : main.cpp

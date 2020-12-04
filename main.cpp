@@ -12,9 +12,7 @@ using namespace std;
 void bfs(const Graph& g, const Vertex& start);
 
 int main() {
-    /*DataSet titles = DataSet("small_sample.tsv");
-    titles.print();
-    return 0;*/
+    
     Graph g(false, true);
     Vertex start = "";
     std::ifstream infile("soc-redditHyperlinks-title.tsv");
@@ -35,6 +33,7 @@ int main() {
         }
         g.insertEdge(results[0], results[1]); // Insert edge from that line
     }
+
     bfs(g, start);
 }
 

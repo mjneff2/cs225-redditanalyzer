@@ -35,7 +35,6 @@
 #include <vector>
 
 #include "edge.h"
-#include "random.h"
 
 using std::cerr;
 using std::cout;
@@ -71,15 +70,6 @@ public:
      * @param directed - specifies whether the graph is directed
      */
     Graph(bool weighted, bool directed);
-
-    /**
-     * Constructor to create a random, connected graph.
-     * @param weighted - specifies whether the graph is a weighted graph or
-     *  not
-     * @param numVertices - the number of vertices the graph will have
-     * @param seed - a random seed to create the graph with
-     */
-    Graph(bool weighted, int numVertices, unsigned long seed);
 
     /**
      * Gets all adjacent vertices to the parameter vertex.
@@ -202,27 +192,9 @@ public:
     Edge setEdgeWeight(Vertex source, Vertex destination, int weight);
 
     /**
-     * Creates a name for snapshots of the graph.
-     * @param title - the name to save the snapshots as
-     */
-    void initSnapshot(string title);
-
-    /**
-     * Saves a snapshot of the graph to file.
-     * initSnapshot() must be run first.
-     */
-    void snapshot();
-
-    /**
      * Prints the graph to stdout.
      */
     void print() const;
-
-    /**
-     * Saves the graph as a PNG image.
-     * @param title - the filename of the PNG image
-     */
-    void savePNG(string title) const;
 
     bool isDirected() const;
 
@@ -239,10 +211,6 @@ private:
 
     bool weighted;
     bool directed;
-    Random random;
-    int picNum;
-    string picName;
-
 
     /**
      * Returns whether a given vertex exists in the graph.
