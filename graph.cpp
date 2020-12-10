@@ -38,7 +38,9 @@ void Graph::loadData(string fileName) {
 void Graph::BFS() {
     std::unordered_set<std::string> traversed;
     std::queue<std::string> queue;
-    queue.push(getStartingVertex());
+    srand(time(NULL)); // Set seed to be current time
+    Vertex random = getVertices()[rand() % getVertices().size()];
+    queue.push(random);
     while (!queue.empty()) {
         std::string current = queue.front();
         std::cout << current << std::endl;
