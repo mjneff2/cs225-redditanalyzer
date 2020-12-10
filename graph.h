@@ -87,6 +87,18 @@ public:
     void BFS();
 
     /**
+     * Finds lowest cost path between two nodes
+     * Links that occur more often have a lower cost
+     */
+    void Djikstra(Vertex start, Vertex end);
+
+    /**
+     * Finds lowest cost path between two nodes that goes through a third node
+     * Links that occure more often have a lower cost
+     */
+    void Landmark(Vertex start, Vertex landmark, Vertex end);
+
+    /**
      * Gets all adjacent vertices to the parameter vertex.
      * @param source - vertex to get neighbors from
      * @return a vector of vertices

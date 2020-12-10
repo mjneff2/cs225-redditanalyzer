@@ -31,7 +31,13 @@ void Graph::loadData(string fileName) {
         if (!vertexExists(results[1])) {
             insertVertex(results[1]); // Insert destination vertex if it doesn't exists
         }
-        insertEdge(results[0], results[1]); // Insert edge from that line
+        if (!edgeExists(results[0], results[1])) {
+            insertEdge(results[0], results[1]); // Insert edge from that line
+            setEdgeWeight(results[0], results[1], 1);
+        } else {
+            // Each link increases edge weight by one, inverse will be used as cost in algos
+            setEdgeWeight(results[0], results[1], getEdgeWeight(results[0], results[1]) + 1); 
+        }
     }
 }
 
@@ -54,6 +60,14 @@ void Graph::BFS() {
             }
         }
     }
+}
+
+void Graph::Djikstra(Vertex start, Vertex end) {
+
+}
+
+void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
+
 }
 
 
