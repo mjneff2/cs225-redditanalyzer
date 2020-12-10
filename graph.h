@@ -33,9 +33,12 @@
 #include <set>
 #include <sstream>
 #include <vector>
+#include <iterator>
+#include <unordered_set>
+#include <queue>
+
 
 #include "edge.h"
-#include "random.h"
 
 using std::cerr;
 using std::cout;
@@ -73,13 +76,15 @@ public:
     Graph(bool weighted, bool directed);
 
     /**
-     * Constructor to create a random, connected graph.
-     * @param weighted - specifies whether the graph is a weighted graph or
-     *  not
-     * @param numVertices - the number of vertices the graph will have
-     * @param seed - a random seed to create the graph with
+     * Loads the data into the graph
+     * @param fileName - the name of the file tha data is in
      */
-    Graph(bool weighted, int numVertices, unsigned long seed);
+    void loadData(string fileName);
+
+    /**
+     * Traverses through the graph using a BFS 
+     */
+    void BFS();
 
     /**
      * Gets all adjacent vertices to the parameter vertex.
@@ -202,27 +207,9 @@ public:
     Edge setEdgeWeight(Vertex source, Vertex destination, int weight);
 
     /**
-     * Creates a name for snapshots of the graph.
-     * @param title - the name to save the snapshots as
-     */
-    void initSnapshot(string title);
-
-    /**
-     * Saves a snapshot of the graph to file.
-     * initSnapshot() must be run first.
-     */
-    void snapshot();
-
-    /**
      * Prints the graph to stdout.
      */
     void print() const;
-
-    /**
-     * Saves the graph as a PNG image.
-     * @param title - the filename of the PNG image
-     */
-    void savePNG(string title) const;
 
     bool isDirected() const;
 
@@ -239,10 +226,6 @@ private:
 
     bool weighted;
     bool directed;
-    Random random;
-    int picNum;
-    string picName;
-
 
     /**
      * Returns whether a given vertex exists in the graph.
