@@ -33,6 +33,10 @@
 #include <set>
 #include <sstream>
 #include <vector>
+#include <iterator>
+#include <unordered_set>
+#include <queue>
+
 
 #include "edge.h"
 
@@ -70,6 +74,17 @@ public:
      * @param directed - specifies whether the graph is directed
      */
     Graph(bool weighted, bool directed);
+
+    /**
+     * Loads the data into the graph
+     * @param fileName - the name of the file tha data is in
+     */
+    void loadData(string fileName);
+
+    /**
+     * Traverses through the graph using a BFS 
+     */
+    void BFS();
 
     /**
      * Gets all adjacent vertices to the parameter vertex.

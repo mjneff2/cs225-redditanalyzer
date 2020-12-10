@@ -13,6 +13,46 @@ Graph::Graph(bool weighted, bool directed) : weighted(weighted),directed(directe
 {
 }
 
+void Graph::loadData(string fileName) {
+    Vertex start = "";
+    std::ifstream infile(fileName);
+    std::string line;
+    std::getline(infile, line); // Get rid of first line
+    while (std::getline(infile, line)) {
+        std::istringstream buffer(line);
+        std::vector<std::string> results((std::istream_iterator<std::string>(buffer)), // Parse string into vector separated by spaces
+                                 std::istream_iterator<std::string>());
+        if (start == "") {
+            start = results[0];
+        }
+        if (!vertexExists(results[0])) {
+            insertVertex(results[0]); // Insert source vertex if it doesn't exist
+        }
+        if (!vertexExists(results[1])) {
+            insertVertex(results[1]); // Insert destination vertex if it doesn't exists
+        }
+        insertEdge(results[0], results[1]); // Insert edge from that line
+    }
+}
+
+void Graph::BFS() {
+    std::unordered_set<std::string> traversed;
+    std::queue<std::string> queue;
+    queue.push(getStartingVertex());
+    while (!queue.empty()) {
+        std::string current = queue.front();
+        std::cout << current << std::endl;
+        traversed.insert(current);
+        queue.pop();
+
+        for (Vertex neighbor : getAdjacent(current)) {
+            if (edgeExists(current, neighbor) && traversed.find(neighbor) == traversed.end()) {
+                queue.push(neighbor);
+                traversed.insert(neighbor);
+            }
+        }
+    }
+}
 
 
 vector<Vertex> Graph::getAdjacent(Vertex source) const 
