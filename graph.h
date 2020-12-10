@@ -234,7 +234,7 @@ public:
     const static string InvalidLabel;
 
 private:
-    mutable unordered_map<Vertex, unordered_map<Vertex, Edge>> adjacency_list;
+    mutable unordered_map<Vertex, unordered_map<Vertex, Edge> > adjacency_list;
 
     bool weighted;
     bool directed;
