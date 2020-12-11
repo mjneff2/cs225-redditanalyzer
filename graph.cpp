@@ -67,7 +67,13 @@ void Graph::Djikstra(Vertex start, Vertex end) {
 }
 
 void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
-
+    for (Vertex v : DjikstraPath(start, landmark)) {
+        cout << v << endl;
+    }
+    vector<Vertex> toEnd = DjikstraPath(landmark, end);
+    for (size_t i = 1; i < toEnd.size(); i++) {
+        cout << toEnd[i] << endl;
+    }
 }
 
 

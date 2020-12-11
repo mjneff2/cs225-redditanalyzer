@@ -87,13 +87,13 @@ public:
     void BFS();
 
     /**
-     * Finds lowest cost path between two nodes
+     * Prints lowest cost path between two nodes
      * Links that occur more often have a lower cost
      */
     void Djikstra(Vertex start, Vertex end);
 
     /**
-     * Finds lowest cost path between two nodes that goes through a third node
+     * Prints lowest cost path between two nodes that goes through a third node
      * Links that occure more often have a lower cost
      */
     void Landmark(Vertex start, Vertex landmark, Vertex end);
@@ -263,4 +263,9 @@ private:
      * @param message - the error message that is printed
      */
     void error(string message) const;
+
+    /**
+     * Runs Djikstra algorithm and returns the path
+     */
+    vector<Vertex> DjikstraPath(Vertex start, Vertex end);
 };
