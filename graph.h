@@ -36,9 +36,11 @@
 #include <iterator>
 #include <unordered_set>
 #include <queue>
+#include <stack>
 
 
 #include "edge.h"
+#include "heap.h"
 
 using std::cerr;
 using std::cout;
@@ -60,6 +62,34 @@ using std::unordered_map;
 class Graph
 {
 public:
+
+    struct Node
+    {
+        Vertex v;
+        int d;
+        Vertex prev;
+
+        Node(Vertex vertex, int distance, Vertex previous) : v(vertex) , d(distance), prev(previous) {}
+
+        Node() {}
+
+        Node (Vertex vertex) : v(vertex) {}
+
+        bool operator<(const Node& other) const
+        {
+            return d < other.d;
+        }
+        bool operator==(const Node& other) const
+        {
+            return v == other.v;
+        }
+        bool operator!=(const Node& other) const
+        {
+            return v != other.v;
+        }
+    };
+    
+
     /**
      * Constructor to create an empty graph.
      * @param weighted - specifies whether the graph is a weighted graph or

@@ -70,11 +70,123 @@ void Graph::BFS() {
 }
 
 void Graph::Djikstra(Vertex start, Vertex end) {
+    vector<Vertex> vertices = getVertices();
+    vector<Node> visited;
+    heap<Node> myHeap;
 
+    // Initialize the heap 
+    for (unsigned i = 0; i < vertices.size(); i++) {
+        if (vertices[i] == start) {
+            myHeap.push(Node(start, 0, ""));
+        } else {
+            myHeap.push(Node(vertices[i], INT_MAX, ""));
+        }
+    }
+
+    Node current = Node();
+    while (!myHeap.empty()) {
+        Node current = myHeap.pop();
+        visited.push_back(current);
+
+        // There is no path to the vertex so we break out of the loop
+        if (current.d == INT_MAX) {
+            break;
+        }
+
+        for (Vertex neighbor: getAdjacent(current.v)) {
+            int weight = getEdgeWeight(current.v, neighbor);
+            vector<Node>::iterator it;
+            it = std::find(visited.begin(), visited.end(), neighbor);
+            if (it == visited.end()) {
+                if (weight + current.d < myHeap.getElem(Node(neighbor)).d) {
+                    myHeap.updateElem(Node(neighbor), Node(neighbor, weight, current.v));   
+                }
+            }
+        }
+        if (current.v == end) {
+            break;
+        }
+    }
+    vector<Node>::iterator it = visited.end();
+    it--;
+
+    std::stack<Vertex> stack;
+
+    while (it != visited.begin()) {
+        if (it->d == INT_MAX) {
+            cout << "There is no path from the starting and ending vertex" << endl;
+            return;
+        }
+        stack.push(it->v);
+        cout << it->d << endl;
+
+        it = find(visited.begin(), visited.end(), Node(it->prev));
+    }
+    stack.push(start);
+    while (!stack.empty()) {
+        cout <<  stack.top() << endl;
+        stack.pop();
+    }
 }
 
-vector<Vertex> Graph::DjikstraPath(Vertex stard, Vertex end) {
+vector<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
     vector<Vertex> path;
+    vector<Vertex> vertices = getVertices();
+    vector<Node> visited;
+    heap<Node> myHeap;
+
+    // Initialize the heap 
+    for (unsigned i = 0; i < vertices.size(); i++) {
+        if (vertices[i] == start) {
+            myHeap.push(Node(start, 0, ""));
+        } else {
+            myHeap.push(Node(vertices[i], INT_MAX, ""));
+        }
+    }
+
+    Node current = Node();
+    while (!myHeap.empty()) {
+        Node current = myHeap.pop();
+        visited.push_back(current);
+
+        // There is no path to the vertex so we break out of the loop
+        if (current.d == INT_MAX) {
+            break;
+        }
+
+        for (Vertex neighbor: getAdjacent(current.v)) {
+            int weight = getEdgeWeight(current.v, neighbor);
+            vector<Node>::iterator it;
+            it = std::find(visited.begin(), visited.end(), neighbor);
+            if (it == visited.end()) {
+                if (weight + current.d < myHeap.getElem(Node(neighbor)).d) {
+                    myHeap.updateElem(Node(neighbor), Node(neighbor, weight, current.v));   
+                }
+            }
+        }
+        if (current.v == end) {
+            break;
+        }
+    }
+    vector<Node>::iterator it = visited.end();
+    it--;
+
+    std::stack<Vertex> stack;
+
+    while (it != visited.begin()) {
+        if (it->d == INT_MAX) {
+            cout << "There is no path from the starting and ending vertex" << endl;
+            return path;
+        }
+        stack.push(it->v);
+        it = find(visited.begin(), visited.end(), Node(it->prev));
+    }
+    stack.push(start);
+    while (!stack.empty()) {
+        path.push_back(stack.top());
+        stack.pop();
+    }
+
     return path;
 }
 
