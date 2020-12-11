@@ -53,6 +53,7 @@ using std::vector;
 using std::pair;
 using std::make_pair;
 using std::unordered_map;
+using std::list;
 
 
 /**
@@ -69,7 +70,7 @@ public:
         int d;
         Vertex prev;
 
-        Node(Vertex vertex, int distance, Vertex previous) : v(vertex) , d(distance), prev(previous) {}
+        Node(Vertex vertex, int distance) : v(vertex) , d(distance) {}
 
         Node() {}
 
@@ -297,5 +298,5 @@ private:
     /**
      * Runs Djikstra algorithm and returns the path
      */
-    vector<Vertex> DjikstraPath(Vertex start, Vertex end);
+    list<Vertex> DjikstraPath(Vertex start, Vertex end);
 };

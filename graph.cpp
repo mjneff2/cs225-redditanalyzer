@@ -1,5 +1,7 @@
 #include "graph.h"
 
+#include <list>
+
 const Vertex Graph::InvalidVertex = "_CS225INVALIDVERTEX";
 const int Graph::InvalidWeight = INT_MIN;
 const string Graph:: InvalidLabel = "_CS225INVALIDLABEL";
@@ -70,121 +72,57 @@ void Graph::BFS() {
 }
 
 void Graph::Djikstra(Vertex start, Vertex end) {
-    vector<Vertex> vertices = getVertices();
-    vector<Node> visited;
-    heap<Node> myHeap;
-
-    // Initialize the heap 
-    for (unsigned i = 0; i < vertices.size(); i++) {
-        if (vertices[i] == start) {
-            myHeap.push(Node(start, 0, ""));
-        } else {
-            myHeap.push(Node(vertices[i], INT_MAX, ""));
-        }
-    }
-
-    Node current = Node();
-    while (!myHeap.empty()) {
-        Node current = myHeap.pop();
-        visited.push_back(current);
-
-        // There is no path to the vertex so we break out of the loop
-        if (current.d == INT_MAX) {
-            break;
-        }
-
-        for (Vertex neighbor: getAdjacent(current.v)) {
-            int weight = getEdgeWeight(current.v, neighbor);
-            vector<Node>::iterator it;
-            it = std::find(visited.begin(), visited.end(), neighbor);
-            if (it == visited.end()) {
-                if (weight + current.d < myHeap.getElem(Node(neighbor)).d) {
-                    myHeap.updateElem(Node(neighbor), Node(neighbor, weight, current.v));   
-                }
-            }
-        }
-        if (current.v == end) {
-            break;
-        }
-    }
-    vector<Node>::iterator it = visited.end();
-    it--;
-
-    std::stack<Vertex> stack;
-
-    while (it != visited.begin()) {
-        if (it->d == INT_MAX) {
-            cout << "There is no path from the starting and ending vertex" << endl;
-            return;
-        }
-        stack.push(it->v);
-        cout << it->d << endl;
-
-        it = find(visited.begin(), visited.end(), Node(it->prev));
-    }
-    stack.push(start);
-    while (!stack.empty()) {
-        cout <<  stack.top() << endl;
-        stack.pop();
+    for (Vertex v : DjikstraPath(start, end)) {
+        cout << v << endl;
     }
 }
 
-vector<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
-    vector<Vertex> path;
-    vector<Vertex> vertices = getVertices();
-    vector<Node> visited;
-    heap<Node> myHeap;
+list<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
+    unordered_map<Vertex, int> dist;
+    unordered_map<Vertex, Vertex> prev;
 
+    dist[start] = 0;
+
+    heap<Node> myHeap;
     // Initialize the heap 
-    for (unsigned i = 0; i < vertices.size(); i++) {
-        if (vertices[i] == start) {
-            myHeap.push(Node(start, 0, ""));
-        } else {
-            myHeap.push(Node(vertices[i], INT_MAX, ""));
+    for (Vertex v : getVertices()) {
+        if (v != start) {
+            dist[v] = INT_MAX;
+            prev[v] = "";
         }
+        myHeap.push(Node(v, dist[v]));
     }
 
-    Node current = Node();
     while (!myHeap.empty()) {
         Node current = myHeap.pop();
-        visited.push_back(current);
 
         // There is no path to the vertex so we break out of the loop
-        if (current.d == INT_MAX) {
+        if (current.v == end) {
             break;
         }
 
         for (Vertex neighbor: getAdjacent(current.v)) {
-            int weight = getEdgeWeight(current.v, neighbor);
-            vector<Node>::iterator it;
-            it = std::find(visited.begin(), visited.end(), neighbor);
-            if (it == visited.end()) {
-                if (weight + current.d < myHeap.getElem(Node(neighbor)).d) {
-                    myHeap.updateElem(Node(neighbor), Node(neighbor, weight, current.v));   
+            if (edgeExists(current.v, neighbor)) {
+                int weight = dist[current.v] + getEdgeWeight(current.v, neighbor);
+                if (weight < dist[neighbor]) {
+                    Node toUpdate(neighbor, dist[neighbor]);
+                    dist[neighbor] = weight;
+                    prev[neighbor] = current.v;
+                    myHeap.updateElem(toUpdate, Node(neighbor, weight));
                 }
             }
         }
-        if (current.v == end) {
+    }
+
+    list<Vertex> path;
+    Vertex current = end;
+    while (prev[current] != "" || current == start) {
+        path.push_front(current);
+        if (current != start) {
+            current = prev[current];
+        } else {
             break;
         }
-    }
-    vector<Node>::iterator it = visited.end();
-    it--;
-
-    std::stack<Vertex> stack;
-
-    while (it != visited.begin()) {
-        if (it->d == INT_MAX) {
-            cout << "There is no path from the starting and ending vertex" << endl;
-            return path;
-        }
-        stack.push(it->v);
-        it = find(visited.begin(), visited.end(), Node(it->prev));
-    }
-    stack.push(start);
-    while (!stack.empty()) {
-        path.push_back(stack.top());
-        stack.pop();
     }
 
     return path;
@@ -194,9 +132,12 @@ void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
     for (Vertex v : DjikstraPath(start, landmark)) {
         cout << v << endl;
     }
-    vector<Vertex> toEnd = DjikstraPath(landmark, end);
-    for (size_t i = 1; i < toEnd.size(); i++) {
-        cout << toEnd[i] << endl;
+    list<Vertex> toEnd = DjikstraPath(landmark, end);
+    for (Vertex v : toEnd) {
+        if (v == toEnd.front()) {
+            continue;
+        }
+        cout << v << endl;
     }
 }
 
