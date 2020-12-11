@@ -35,9 +35,16 @@ void Graph::loadData(string fileName) {
             insertEdge(results[0], results[1]); // Insert edge from that line
             setEdgeWeight(results[0], results[1], 1);
         } else {
-            // Each link increases edge weight by one, inverse will be used as cost in algos
+            // Each link increases edge weight by one
             setEdgeWeight(results[0], results[1], getEdgeWeight(results[0], results[1]) + 1); 
         }
+    }
+    for (Edge e : getEdges()) {
+        /**
+         * Edges are reassessed so that each weight is a positive integer such that the cost
+         * of an edge with n occurences is roughly 1/n the cost of an edge with 1 occurence
+         */
+        setEdgeWeight(e.source, e.dest, 10000 / getEdgeWeight(e.source, e.dest));
     }
 }
 
@@ -64,6 +71,11 @@ void Graph::BFS() {
 
 void Graph::Djikstra(Vertex start, Vertex end) {
 
+}
+
+vector<Vertex> Graph::DjikstraPath(Vertex stard, Vertex end) {
+    vector<Vertex> path;
+    return path;
 }
 
 void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
