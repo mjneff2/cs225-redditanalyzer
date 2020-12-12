@@ -257,6 +257,11 @@ public:
 
     void clear();
 
+    /**
+     * Runs Djikstra algorithm and returns the path
+     */
+    list<Vertex> DjikstraPath(Vertex start, Vertex end);
+
 
     const static Vertex InvalidVertex;
     const static Edge InvalidEdge;
@@ -294,8 +299,5 @@ private:
      */
     void error(string message) const;
 
-    /**
-     * Runs Djikstra algorithm and returns the path
-     */
-    list<Vertex> DjikstraPath(Vertex start, Vertex end);
+    
 };
