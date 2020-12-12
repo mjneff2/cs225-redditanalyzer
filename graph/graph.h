@@ -116,6 +116,8 @@ public:
      */
     void BFS();
 
+    list<Vertex> BFS(Vertex start);
+
     /**
      * Prints lowest cost path between two nodes
      * Links that occur more often have a lower cost
