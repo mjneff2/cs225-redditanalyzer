@@ -1,7 +1,5 @@
 #include "graph.h"
 
-#include <list>
-
 const Vertex Graph::InvalidVertex = "_CS225INVALIDVERTEX";
 const int Graph::InvalidWeight = INT_MIN;
 const string Graph:: InvalidLabel = "_CS225INVALIDLABEL";
@@ -72,8 +70,13 @@ void Graph::BFS() {
 }
 
 void Graph::Djikstra(Vertex start, Vertex end) {
-    for (Vertex v : DjikstraPath(start, end)) {
-        cout << v << endl;
+    list<Vertex> path = DjikstraPath(start, end);
+    if (path.size() == 0) {
+        cout << "No path between " << start << " and " << end << endl;
+    } else {
+        for (Vertex v : path) {
+            cout << v << endl;
+        }
     }
 }
 
@@ -83,7 +86,7 @@ list<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
 
     dist[start] = 0;
 
-    heap<Node> myHeap;
+    std::priority_queue<Node, vector<Node>, std::greater<Node>> myHeap;
     // Initialize the heap 
     for (Vertex v : getVertices()) {
         if (v != start) {
@@ -93,8 +96,21 @@ list<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
         myHeap.push(Node(v, dist[v]));
     }
 
+    /*while (!myHeap.empty()) {
+        cout << myHeap.top().v << " " << myHeap.top().d << endl;
+        myHeap.pop();
+    }
+    return list<Vertex>();*/
+
     while (!myHeap.empty()) {
-        Node current = myHeap.pop();
+        Node current = myHeap.top();
+        myHeap.pop();
+        //cout << "Popped " << current.v << " with cost " << current.d << endl;
+
+        if (current.d > dist[current.v]) {
+            //cout << "Ignoring " << current.v << endl;
+            continue;
+        }
 
         // There is no path to the vertex so we break out of the loop
         if (current.v == end) {
@@ -105,10 +121,9 @@ list<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
             if (edgeExists(current.v, neighbor)) {
                 int weight = dist[current.v] + getEdgeWeight(current.v, neighbor);
                 if (weight < dist[neighbor]) {
-                    Node toUpdate(neighbor, dist[neighbor]);
                     dist[neighbor] = weight;
                     prev[neighbor] = current.v;
-                    myHeap.updateElem(toUpdate, Node(neighbor, weight));
+                    myHeap.push(Node(neighbor, weight));
                 }
             }
         }
