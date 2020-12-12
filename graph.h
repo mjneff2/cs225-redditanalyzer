@@ -30,30 +30,26 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include <set>
+#include <unordered_set>
 #include <sstream>
 #include <vector>
 #include <iterator>
-#include <unordered_set>
 #include <queue>
-#include <stack>
-
+#include <set>
 
 #include "edge.h"
-#include "heap.h"
 
 using std::cerr;
 using std::cout;
 using std::endl;
-using std::vector;
-using std::set;
 using std::string;
 using std::to_string;
 using std::vector;
-using std::pair;
-using std::make_pair;
 using std::unordered_map;
+using std::unordered_set;
 using std::list;
+using std::set;
+using std::pair;
 
 
 /**
@@ -68,7 +64,6 @@ public:
     {
         Vertex v;
         int d;
-        Vertex prev;
 
         Node(Vertex vertex, int distance) : v(vertex) , d(distance) {}
 
@@ -80,13 +75,17 @@ public:
         {
             return d < other.d;
         }
+        bool operator>(const Node& other) const
+        {
+            return d > other.d;
+        }
         bool operator==(const Node& other) const
         {
-            return v == other.v;
+            return v == other.v && d == other.d;
         }
         bool operator!=(const Node& other) const
         {
-            return v != other.v;
+            return v != other.v || d != other.d;
         }
     };
     
@@ -258,6 +257,11 @@ public:
 
     void clear();
 
+    /**
+     * Runs Djikstra algorithm and returns the path
+     */
+    list<Vertex> DjikstraPath(Vertex start, Vertex end);
+
 
     const static Vertex InvalidVertex;
     const static Edge InvalidEdge;
@@ -295,8 +299,5 @@ private:
      */
     void error(string message) const;
 
-    /**
-     * Runs Djikstra algorithm and returns the path
-     */
-    list<Vertex> DjikstraPath(Vertex start, Vertex end);
+    
 };
