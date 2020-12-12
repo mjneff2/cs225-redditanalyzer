@@ -60,10 +60,10 @@ class heap
 
     /**
      * Updates the element at the provided index of the heap array.
-     * The update is done in such a way that the array will be 
+     * The update is done in such a way that the array will be
      * corrected, so it will remain as a valid heap.
      *
-     * @param idx The index of the element to be updated 
+     * @param idx The index of the element to be updated
      * (This is root()-indexed, so will work if
      * using either zero or one-indexed heaps)
      * @param elem The element to be updated with.
