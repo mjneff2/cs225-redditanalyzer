@@ -144,14 +144,7 @@ list<Vertex> Graph::DjikstraPath(Vertex start, Vertex end) {
 }
 
 void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
-    for (Vertex v : DjikstraPath(start, landmark)) {
-        cout << v << endl;
-    }
-    list<Vertex> toEnd = DjikstraPath(landmark, end);
-    for (Vertex v : toEnd) {
-        if (v == toEnd.front()) {
-            continue;
-        }
+    for (Vertex v : LandmarkPath(start, landmark, end)) {
         cout << v << endl;
     }
 }
