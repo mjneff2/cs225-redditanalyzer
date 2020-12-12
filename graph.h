@@ -128,6 +128,9 @@ public:
      */
     void Landmark(Vertex start, Vertex landmark, Vertex end);
 
+    list<Vertex> LandmarkPath(Vertex start, Vertex landmark, Vertex end);
+
+
     /**
      * Gets all adjacent vertices to the parameter vertex.
      * @param source - vertex to get neighbors from

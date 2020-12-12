@@ -25,3 +25,14 @@ TEST_CASE("Djikstra algorithm returns the shortest path - Second Check") {
 
     REQUIRE(g.DjikstraPath("first", "third") == correctPath);
 }
+TEST_CASE("The landmark algorithm returns the shortest path while traveling through a landmark") {
+    Graph g(true, true);
+    g.loadData("sample.tsv");
+    list<Vertex> correctPath;
+    correctPath.push_back("first");
+    correctPath.push_back("second");
+    correctPath.push_back("third");
+
+    REQUIRE(g.LandmarkPath("first", "second" ,"third") == correctPath);
+}
+
