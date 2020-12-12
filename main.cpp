@@ -4,8 +4,7 @@
 #include <iterator>
 #include <unordered_set>
 #include <queue>
-#include "data.h"
-#include "graph.h"
+#include "graph/graph.h"
 
 using namespace std;
 
