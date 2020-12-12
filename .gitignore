@@ -2,4 +2,5 @@
 *.o
 images/
 main
+test
 *.tsv
