@@ -16,3 +16,12 @@ TEST_CASE("Djikstra algorithm returns the shortest path") {
 
     REQUIRE(g.DjikstraPath("first", "third") == correctPath);
 }
+TEST_CASE("Djikstra algorithm returns the shortest path - Second Check") {
+    Graph g(true, true);
+    g.loadData("testcase2.tsv");
+    list<Vertex> correctPath;
+    correctPath.push_back("first");
+    correctPath.push_back("third");
+
+    REQUIRE(g.DjikstraPath("first", "third") == correctPath);
+}
