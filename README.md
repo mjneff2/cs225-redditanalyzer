@@ -7,3 +7,9 @@ make
 ```
 File should be structured as header with SOURCE_SUBREDDIT and TARGET_SUBREDDIT
 Each line should have first word be start node and second be end node, separated by whitespace.
+
+Two valid example datasets:
+
+https://snap.stanford.edu/data/soc-redditHyperlinks-body.tsv
+
+https://snap.stanford.edu/data/soc-redditHyperlinks-title.tsv
