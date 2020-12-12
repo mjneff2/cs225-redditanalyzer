@@ -156,6 +156,15 @@ void Graph::Landmark(Vertex start, Vertex landmark, Vertex end) {
     }
 }
 
+list<Vertex> Graph::LandmarkPath(Vertex start, Vertex landmark, Vertex end) {
+    list<Vertex> path = DjikstraPath(start, landmark);
+    list<Vertex> endPath = DjikstraPath(landmark, end);
+    endPath.pop_front();
+    path.merge(endPath);
+    return path;
+}
+
+
 
 vector<Vertex> Graph::getAdjacent(Vertex source) const 
 {
