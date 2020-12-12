@@ -69,6 +69,27 @@ void Graph::BFS() {
     }
 }
 
+list<Vertex> Graph::BFS(Vertex start) {
+    list<std::string> list;
+    std::unordered_set<std::string> traversed;
+    std::queue<std::string> queue;
+    queue.push(start);
+    while (!queue.empty()) {
+        std::string current = queue.front();
+        list.push_back(current);
+        traversed.insert(current);
+        queue.pop();
+
+        for (Vertex neighbor : getAdjacent(current)) {
+            if (edgeExists(current, neighbor) && traversed.find(neighbor) == traversed.end()) {
+                queue.push(neighbor);
+                traversed.insert(neighbor);
+            }
+        }
+    }
+    return list;
+}
+
 void Graph::Djikstra(Vertex start, Vertex end) {
     list<Vertex> path = DjikstraPath(start, end);
     if (path.size() == 0) {

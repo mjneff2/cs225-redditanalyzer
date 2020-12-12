@@ -45,4 +45,15 @@ TEST_CASE("The landmark algorithm returns the shortest path while traveling thro
 
     REQUIRE(g.LandmarkPath("first", "second" ,"third") == correctPath);
 }
+TEST_CASE("Test the BFS Traversal") {
+    Graph g(true, true);
+    g.loadData("tests/data/sample.tsv");
+    list<Vertex> list = g.BFS("first");
+    std::list<Vertex> correctTraversal;
 
+    correctTraversal.push_back("first");
+    correctTraversal.push_back("third");
+    correctTraversal.push_back("second");
+    
+    REQUIRE( correctTraversal == g.BFS("first"));
+}
